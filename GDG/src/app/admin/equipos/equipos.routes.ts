@@ -10,5 +10,9 @@ export const EQUIPOS_ROUTES: Routes = [
   {
     path: 'crear',
     component: CrearEquipoComponent
+  },
+  {
+    path: 'actualizar/:id',
+    component: CrearEquipoComponent
   }
 ];

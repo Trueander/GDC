@@ -1,12 +1,12 @@
 <div class="container">
-  <p-toast />
+  <p-toast/>
   <div class="d-flex col-gap-10 align-items-center m-bottom-10">
-    <h2 class="my-0">Equipos</h2>
+    <h2 class="my-0">Roles</h2>
     <p-button label="Registrar" icon="pi pi-plus" iconPos="right" size="small" [routerLink]="'crear'"/>
   </div>
   <div class="table-width">
-    <ng-container *ngIf="teams$ | async as teams">
-      <p-table [value]="teams">
+    <ng-container *ngIf="roles$ | async as roles">
+      <p-table [value]="roles">
         <ng-template pTemplate="header">
           <tr>
             <th>Id</th>
@@ -14,13 +14,13 @@
             <th>Acciones</th>
           </tr>
         </ng-template>
-        <ng-template pTemplate="body" let-team>
+        <ng-template pTemplate="body" let-role>
           <tr>
-            <td>{{ team.idEquipo }}</td>
-            <td>{{ team.nombre }}</td>
+            <td>{{ role.idRol }}</td>
+            <td>{{ role.nombre }}</td>
             <td>
-              <p-button icon="pi pi-pen-to-square" [rounded]="true" [text]="true" severity="primary" [routerLink]="['actualizar', team.idEquipo]" />
-              <p-button icon="pi pi-trash" [rounded]="true" [text]="true" severity="danger" (click)="eliminarEquipo(team.idEquipo)" />
+              <p-button icon="pi pi-pen-to-square" [rounded]="true" [text]="true" severity="primary" [routerLink]="['actualizar', role.idRol]"/>
+              <p-button icon="pi pi-trash" [rounded]="true" [text]="true" severity="danger" (click)="eliminarRol(role.idRol)"/>
             </td>
           </tr>
         </ng-template>

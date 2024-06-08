@@ -10,5 +10,9 @@ export const USUARIOS_ROUTES: Routes = [
   {
     path: 'crear',
     component: CrearUsuarioComponent
+  },
+  {
+    path: 'actualizar/:id',
+    component: CrearUsuarioComponent
   }
 ];

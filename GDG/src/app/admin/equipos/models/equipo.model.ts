@@ -1,5 +1,5 @@
 export class Equipo {
-  constructor(public id: number,
-              public nombre: string) {
+  constructor(public nombre: string,
+              public idEquipo?: number) {
   }
 }

@@ -1,1 +1,46 @@
-<p>crear-usuario works!</p>
+<div class="container">
+  <p-toast />
+  <form [formGroup]="form" novalidate (ngSubmit)="createUser()">
+    <p-card header="Crear usuario">
+      <div class="form-container d-flex flex-column gap-10">
+        <div class="d-flex flex-column gap-5">
+          <label for="Nombres">Nombres</label>
+          <input id="Nombres" formControlName="nombres" type="text" pInputText/>
+        </div>
+        <div class="d-flex flex-column gap-5">
+          <label for="Apellidos">Apellidos</label>
+          <input id="Apellidos" formControlName="apellidos" type="text" pInputText/>
+        </div>
+        <div class="d-flex flex-column gap-5">
+          <label for="Correo1">Correo</label>
+          <input id="Correo1" formControlName="correo" type="text" pInputText/>
+        </div>
+        <div class="d-flex flex-column gap-5">
+          <label for="password">Contraseña</label>
+          <input id="password" formControlName="password" type="password" pInputText/>
+        </div>
+        <div class="d-flex flex-column gap-5">
+          <label for="password">Equipo</label>
+          <ng-container *ngIf="teams$ | async as teams">
+            <p-dropdown
+              [options]="teams"
+              optionLabel="nombre"
+              placeholder="Selecciona un equipo" formControlName="equipos"/>
+          </ng-container>
+        </div>
+        <div class="d-flex flex-column gap-5">
+          <label for="password">Rol</label>
+          <ng-container *ngIf="roles$ | async as roles">
+            <p-dropdown
+              [options]="roles"
+              optionLabel="nombre"
+              placeholder="Selecciona un rol" formControlName="roles"/>
+          </ng-container>
+        </div>
+        <div class="d-flex">
+          <p-button label="Guardar usuario" type="submit" [disabled]="form.invalid"/>
+        </div>
+      </div>
+    </p-card>
+  </form>
+</div>

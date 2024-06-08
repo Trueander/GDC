@@ -24,7 +24,7 @@ export class HomeComponent implements OnInit{
       },
       {
         label: 'Equipos',
-        icon: 'pi pi-star',
+        icon: 'pi pi-users',
         items: [
           {
             label: 'Listar equipos',
@@ -39,8 +39,24 @@ export class HomeComponent implements OnInit{
         ]
       },
       {
+        label: 'Roles',
+        icon: 'pi pi-sitemap',
+        items: [
+          {
+            label: 'Listar roles',
+            icon: 'pi pi-list',
+            routerLink: '/admin/roles'
+          },
+          {
+            label: 'Crear roles',
+            icon: 'pi pi-plus',
+            routerLink: '/admin/roles/crear'
+          }
+        ]
+      },
+      {
         label: 'Usuarios',
-        icon: 'pi pi-users',
+        icon: 'pi pi-user',
         items: [
           {
             label: 'Listar usuarios',
@@ -55,9 +71,11 @@ export class HomeComponent implements OnInit{
         ]
       },
       {
-        label: 'Contact',
-        icon: 'pi pi-envelope'
-      }
+        label: 'Cerrar sesión',
+        icon: 'pi pi-sign-out',
+        routerLink: '/login'
+      },
+
     ];
   }
 }
