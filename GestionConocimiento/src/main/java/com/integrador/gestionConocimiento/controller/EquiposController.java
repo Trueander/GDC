@@ -9,6 +9,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/equipos")
+@CrossOrigin
 public class EquiposController {
     private final EquiposService equiposService;
 

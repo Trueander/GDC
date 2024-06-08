@@ -9,6 +9,7 @@ public interface UsuariosService {
     List<Usuarios> getAll();
 
     Usuarios getById(Integer idUsuario);
+    Usuarios login(String correo, String password);
 
     Usuarios insert(Usuarios usuarios);
 

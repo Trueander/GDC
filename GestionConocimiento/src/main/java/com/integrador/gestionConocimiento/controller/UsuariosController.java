@@ -1,14 +1,18 @@
 package com.integrador.gestionConocimiento.controller;
 
+import com.integrador.gestionConocimiento.model.LoginDTO;
 import com.integrador.gestionConocimiento.model.Usuarios;
 import com.integrador.gestionConocimiento.services.UsuariosService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Objects;
 
 @RestController
 @RequestMapping("/usuarios")
+@CrossOrigin
 public class UsuariosController {
     private final UsuariosService usuariosService;
 
@@ -25,6 +29,16 @@ public class UsuariosController {
     @GetMapping("/{idUsuario}")
     public Usuarios getById(@PathVariable(value = "idUsuario") Integer idUsuario){
         return usuariosService.getById(idUsuario);
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@RequestBody LoginDTO loginDTO){
+        Usuarios usuario = usuariosService.login(loginDTO.correo(), loginDTO.password());
+        if(Objects.nonNull(usuario)) {
+            return ResponseEntity.ok().build();
+        }
+
+        return ResponseEntity.notFound().build();
     }
 
     @PostMapping

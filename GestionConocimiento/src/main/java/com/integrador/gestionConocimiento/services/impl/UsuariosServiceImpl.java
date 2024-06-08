@@ -29,6 +29,11 @@ public class UsuariosServiceImpl implements UsuariosService {
     }
 
     @Override
+    public Usuarios login(String correo, String password) {
+        return usuariosDao.findByCorreoAndPassword(correo, password);
+    }
+
+    @Override
     public Usuarios insert(Usuarios usuarios) {
         return this.usuariosDao.save(usuarios);
     }
