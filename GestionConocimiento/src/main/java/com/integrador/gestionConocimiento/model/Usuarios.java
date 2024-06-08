@@ -32,4 +32,12 @@ public class Usuarios {
     @Column(name = "Idrol")
     private Integer idRol;
 
+    @ManyToOne
+    @JoinColumn(name = "idrol", insertable = false, updatable = false)
+    private Roles roles;
+
+    @ManyToOne
+    @JoinColumn(name = "idequipo", insertable = false, updatable = false)
+    private Equipos equipos;
+
 }
