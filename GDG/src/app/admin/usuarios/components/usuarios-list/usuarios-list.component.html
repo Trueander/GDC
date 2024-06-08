@@ -1,0 +1,35 @@
+<div class="container">
+
+  <div class="d-flex col-gap-10 align-items-center m-bottom-10">
+    <h2 class="my-0">Usuarios</h2>
+    <p-button label="Registrar" icon="pi pi-plus" iconPos="right" size="small" />
+  </div>
+  <p-table [value]="usuarios" styleClass="p-datatable-striped"  [tableStyle]="{ 'min-width': '50rem' }">
+    <ng-template pTemplate="header">
+      <tr>
+        <th>Id</th>
+        <th>Nombres</th>
+        <th>Apellidos</th>
+        <th>Correo</th>
+        <th>Equipo</th>
+        <th>Rol</th>
+        <th>Acciones</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-usuario>
+      <tr>
+        <td>{{ usuario.id }}</td>
+        <td>{{ usuario.nombres }}</td>
+        <td>{{ usuario.apellidos }}</td>
+        <td>{{ usuario.correo }}</td>
+        <td>{{ usuario.equipo.nombre }}</td>
+        <td>{{ usuario.rol.nombre }}</td>
+        <td>
+          <p-button icon="pi pi-heart"  [rounded]="true" [text]="true" severity="help" />
+          <p-button icon="pi pi-times" [rounded]="true" [text]="true" severity="danger" />
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+
+</div>
