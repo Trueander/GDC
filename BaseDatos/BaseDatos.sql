@@ -26,6 +26,10 @@ nombre VARCHAR(150) NOT NULL,
 PRIMARY KEY (idEquipo)
 );
 
+ALTER TABLE Usuarios
+ADD FOREIGN KEY (IdRol) REFERENCES roles(idRol);
 
+ALTER TABLE Usuarios
+ADD FOREIGN KEY (idEquipo) REFERENCES Equipos(idEquipo);
 
 
