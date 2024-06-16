@@ -22,10 +22,16 @@
       </div>
     </p-toolbar>
   </div>
-  <div class="navigation">
-    <h4 class="p-text-secondary m-left-10 m-bottom-5">Navegación</h4>
-    <p-divider styleClass="my-10"/>
-    <p-tree [value]="files" styleClass="h-100" />
+  <div class="main-wrapper">
+    <div class="navigation">
+      <h4 class="p-text-secondary m-left-10 m-bottom-5">Navegación</h4>
+      <p-divider styleClass="my-10"/>
+      <p-tree [value]="files"/>
+    </div>
+    <div class="content d-flex flex-column">
+      <h3>Nueva documentación</h3>
+
+    </div>
   </div>
 
 </div>

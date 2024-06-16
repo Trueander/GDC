@@ -21,23 +21,33 @@
     border-radius: 20px;
   }
 
-  .navigation {
+  .main-wrapper {
     position: fixed;
     top: 55px;
+    left: 0;
+    right: 0;
     bottom: 0;
+    display: grid;
+    grid-template-columns: minmax(200px, 400px) 1fr;
+
+    .content {
+      padding: 20px;
+    }
+  }
+
+  .navigation {
     background: #f9fafb;
     box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.04);
     padding: 10px;
+    overflow: auto;
 
     ::ng-deep p-tree {
       .p-tree {
         border: 0;
         padding: 0;
         border-radius: 0;
-        height: 100%;
         min-width: 200px;
         max-width: 400px;
-        overflow: auto;
         background: inherit;
       }
 
