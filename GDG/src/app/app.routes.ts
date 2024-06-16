@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import {USUARIO_ROUTES} from "./usuario/usuario.routes";
 
 export const routes: Routes = [
   {
@@ -8,5 +9,9 @@ export const routes: Routes = [
   {
     path: 'admin',
     loadChildren: () => import('./admin/admin.routes').then(m => m.ADMIN_ROUTES)
+  },
+  {
+    path: '',
+    loadChildren: () => import('./usuario/usuario.routes').then(m => m.USUARIO_ROUTES)
   }
 ];

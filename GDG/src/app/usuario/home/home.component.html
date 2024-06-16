@@ -1,0 +1,31 @@
+<div class="home-user">
+  <div class="card">
+    <p-toolbar>
+      <div class="p-toolbar-group-start  d-flex gap-5">
+        <img class="logo" src="assets/logo.png" alt="logo">
+      </div>
+      <div class="p-toolbar-group-center">
+
+      </div>
+      <div class="p-toolbar-group-end gap-15">
+        <span class="p-input-icon-left">
+          <i class="pi pi-search"></i>
+          <input class="input-search" pInputText placeholder="Buscar" />
+        </span>
+        <i class="pi pi-bell font-size-xl cursor-pointer" pBadge value="9"></i>
+        <p-avatar
+          shape="circle"
+          class="cursor-pointer" (click)="menu.toggle($event)">
+          <span class="font-w-700 p-text-secondary">AB</span>
+        </p-avatar>
+        <p-menu #menu [model]="items" [popup]="true" />
+      </div>
+    </p-toolbar>
+  </div>
+  <div class="navigation">
+    <h4 class="p-text-secondary m-left-10 m-bottom-5">Navegación</h4>
+    <p-divider styleClass="my-10"/>
+    <p-tree [value]="files" styleClass="h-100" />
+  </div>
+
+</div>

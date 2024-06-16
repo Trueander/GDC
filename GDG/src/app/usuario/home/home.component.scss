@@ -1,0 +1,53 @@
+.home-user {
+  .card {
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+  }
+
+  .logo {
+    width: 150px;
+  }
+
+  ::ng-deep p-toolbar .p-toolbar {
+    padding: 10px 20px;
+    border-radius: 0;
+  }
+
+  .input-search {
+    padding-top: 7px;
+    padding-bottom: 7px;
+    border-radius: 20px;
+  }
+
+  .navigation {
+    position: fixed;
+    top: 55px;
+    bottom: 0;
+    background: #f9fafb;
+    box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.04);
+    padding: 10px;
+
+    ::ng-deep p-tree {
+      .p-tree {
+        border: 0;
+        padding: 0;
+        border-radius: 0;
+        height: 100%;
+        min-width: 200px;
+        max-width: 400px;
+        overflow: auto;
+        background: inherit;
+      }
+
+      .p-ripple {
+        margin-right: 0;
+      }
+
+      .p-treenode-content {
+        padding: 0;
+      }
+    }
+  }
+}
