@@ -35,7 +35,7 @@ public class UsuariosController {
     public ResponseEntity<?> login(@RequestBody LoginDTO loginDTO){
         Usuarios usuario = usuariosService.login(loginDTO.correo(), loginDTO.password());
         if(Objects.nonNull(usuario)) {
-            return ResponseEntity.ok().build();
+            return ResponseEntity.ok(usuario);
         }
 
         return ResponseEntity.notFound().build();

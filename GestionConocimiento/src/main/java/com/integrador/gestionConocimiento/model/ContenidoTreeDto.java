@@ -1,4 +1,6 @@
 package com.integrador.gestionConocimiento.model;
 
-public record ContenidoDto(Integer id, String titulo, ) {
+import java.util.List;
+
+public record ContenidoTreeDto(Integer id, String key, String label, List<ContenidoTreeDto> children) {
 }
