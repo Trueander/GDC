@@ -1,5 +1,4 @@
 import { Routes } from '@angular/router';
-import {USUARIO_ROUTES} from "./usuario/usuario.routes";
 
 export const routes: Routes = [
   {

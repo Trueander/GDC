@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {SplitButtonModule} from "primeng/splitbutton";
 import {ToolbarModule} from "primeng/toolbar";
 import {InputTextModule} from "primeng/inputtext";
@@ -8,6 +8,15 @@ import {AvatarModule} from "primeng/avatar";
 import {MenuModule} from "primeng/menu";
 import {BadgeModule} from "primeng/badge";
 import {DividerModule} from "primeng/divider";
+import {QuillConfigModule} from "./quill-config";
+import {FormControl, ReactiveFormsModule} from "@angular/forms";
+import {ActivatedRoute, NavigationEnd, Router} from "@angular/router";
+import {DomSanitizer, SafeHtml} from "@angular/platform-browser";
+import {AsyncPipe, NgClass, NgIf, NgStyle} from "@angular/common";
+import {Ripple} from "primeng/ripple";
+import {filter, map, mergeMap, Observable, tap} from "rxjs";
+import {ContenidoService} from "../documentacion/services/contenido.service";
+import {ProgressBarModule} from "primeng/progressbar";
 
 @Component({
   selector: 'app-home',
@@ -20,15 +29,48 @@ import {DividerModule} from "primeng/divider";
     AvatarModule,
     MenuModule,
     BadgeModule,
-    DividerModule
+    DividerModule,
+    QuillConfigModule,
+    ReactiveFormsModule,
+    NgIf,
+    Ripple,
+    AsyncPipe,
+    NgClass,
+    NgStyle,
+    ProgressBarModule
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit{
   items: MenuItem[] | undefined;
-  files!: TreeNode[];
+  user!: string | null;
+  treeData: any;
+  resourceId!: number | undefined;
+  previousNode: any;
+  constructor(private contenidoService: ContenidoService,
+              private router: Router,
+              private route: ActivatedRoute) {
+  }
+
   ngOnInit() {
+    const url = this.router.url;
+    const index = url.indexOf('/contenido/');
+    if (index !== -1) {
+      this.resourceId = +url.substring(index + '/contenido/'.length);
+    } else {
+      this.resourceId = undefined;
+    }
+
+    this.contenidoService.getContenidosTree()
+      .pipe(tap((response) => {
+        this.treeData = response;
+        this.markActiveNode(this.treeData);
+      }))
+      .subscribe();
+    this.loadUserData();
+
+    console.log(this.resourceId)
     this.items = [
       {
         label: 'Configuración',
@@ -36,100 +78,58 @@ export class HomeComponent {
       },
       {
         label: 'Cerrar sesión',
-        icon: 'pi pi-sign-out'
+        icon: 'pi pi-sign-out',
+        command: () => this.logout()
       }
     ];
+  }
 
-    this.files = [
-      {
-        key: '0',
-        label: 'Documents',
-        data: 'Documents Folder',
-        children: [
-          {
-            key: '0-0',
-            label: 'Work',
-            data: 'Work Folder',
-            children: [
-              { key: '0-0-0',
-                label: 'Expenses.doc',
-                data: 'Expenses Document',
-                children: [
-                  { key: '0-0-0', label: 'Expenses12312 123123.doc', data: 'Expenses Document' },
-                  { key: '0-0-1', label: 'Resume.doc', data: 'Resume Document',
-                    children: [
-                      { key: '0-0-0', label: 'Expenses.doc 123123', data: 'Expenses Document' },
-                      { key: '0-0-1', label: 'Resume.doc', data: 'Resume Document',
-                        children: [
-                          { key: '0-0-0', label: 'Expenses.doc 123123', data: 'Expenses Document' },
-                          { key: '0-0-1', label: 'Resume.doc', data: 'Resume Document',
-                            children: [
-                              { key: '0-0-0', label: 'Expenses.doc 123123', data: 'Expenses Document' },
-                              { key: '0-0-1', label: 'Resume.doc', data: 'Resume Document', children: [
-                                  { key: '0-0-0', label: 'Expenses.doc 123123', data: 'Expenses Document' },
-                                  { key: '0-0-1', label: 'Resume.doc', data: 'Resume Document',
-                                    children: [
-                                      { key: '0-0-0', label: 'Expenses.doc 123123', data: 'Expenses Document' },
-                                      { key: '0-0-1', label: 'Resume.doc', data: 'Resume Document',
-                                        children: [
-                                          { key: '0-0-0', label: 'Expenses.doc 123123', data: 'Expenses Document' },
-                                          { key: '0-0-1', label: 'Resume.doc', data: 'Resume Document' }
-                                        ]}
-                                    ]}
-                                ] }
-                            ]}
-                        ]}
-                    ]
-                  }
-                ]
-              },
-              { key: '0-0-1', label: 'Resume.doc', data: 'Resume Document' }
-            ]
-          },
-          {
-            key: '0-1',
-            label: 'Home',
-            data: 'Home Folder',
-            children: [{ key: '0-1-0', label: 'Invoices.txt', data: 'Invoices for this month' }]
-          }
-        ]
-      },
-      {
-        key: '1',
-        label: 'Events',
-        data: 'Events Folder',
-        children: [
-          { key: '1-0', label: 'Meeting', data: 'Meeting' },
-          { key: '1-1', label: 'Product Launch', data: 'Product Launch' },
-          { key: '1-2', label: 'Report Review', data: 'Report Review' }
-        ]
-      },
-      {
-        key: '2',
-        label: 'Movies',
-        data: 'Movies Folder',
-        children: [
-          {
-            key: '2-0',
-            label: 'Al Pacino',
-            data: 'Pacino Movies',
-            children: [
-              { key: '2-0-0', label: 'Scarface', data: 'Scarface Movie' },
-              { key: '2-0-1', label: 'Serpico', data: 'Serpico Movie' }
-            ]
-          },
-          {
-            key: '2-1',
-            label: 'Robert De Niro',
-            data: 'De Niro Movies',
-            children: [
-              { key: '2-1-0', label: 'Goodfellas', data: 'Goodfellas Movie' },
-              { key: '2-1-1', label: 'Untouchables', data: 'Untouchables Movie' }
-            ]
-          }
-        ]
+  private loadUserData(): void {
+    const user = localStorage.getItem('usuario');
+    if(user) {
+      let siglas = user.split(' ');
+      this.user = siglas[0][0] + (siglas[1][0] || '');
+    }
+  }
+
+  nodeSelect(nodo: any, element: any): void {
+    this.router.navigate(['/contenido', nodo.node.id]);
+    // console.log(element.value.find((item: any) => item.id === this.previousNode.id))
+    if(this.previousNode) {
+      // console.log(this.previousNode)
+      this.previousNode.styleClass = '';
+    }
+  }
+
+  markActiveNode(treeData: any): void {
+    if(this.resourceId) {
+      this.nodos(treeData);
+    }
+  }
+
+  nodos(treeData: any) {
+    if(treeData.length === 0) {
+      return;
+    }
+
+    treeData.forEach((node: any) => {
+
+      node.expanded = true;
+      if(this.isNodeActive(node)) {
+        this.previousNode = node;
+        this.previousNode.styleClass = 'text-primary font-w-600'
       }
-    ];
 
+      this.nodos(node.children);
+    });
+  }
+
+  isNodeActive(node: any): boolean {
+    return node.id === this.resourceId;
+  }
+
+  private logout(): void {
+    this.router.navigate(['/login']);
+    localStorage.clear();
   }
 }

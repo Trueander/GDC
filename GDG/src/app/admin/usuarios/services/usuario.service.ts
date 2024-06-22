@@ -24,8 +24,8 @@ export class UsuarioService {
     return this.http.post<void>(`${this.baseUrl}`, user);
   }
 
-  login(login: LoginDTO): Observable<void> {
-    return this.http.post<void>(`${this.baseUrl}/login`, login);
+  login(login: LoginDTO): Observable<Usuario> {
+    return this.http.post<Usuario>(`${this.baseUrl}/login`, login);
   }
 
   updateUser(userId:number, User: Usuario): Observable<void> {

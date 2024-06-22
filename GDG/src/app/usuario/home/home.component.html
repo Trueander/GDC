@@ -1,5 +1,7 @@
 <div class="home-user">
+
   <div class="card">
+    <p-progressBar mode="indeterminate" [style]="{ height: '6px' }" />
     <p-toolbar>
       <div class="p-toolbar-group-start  d-flex gap-5">
         <img class="logo" src="assets/logo.png" alt="logo">
@@ -16,7 +18,7 @@
         <p-avatar
           shape="circle"
           class="cursor-pointer" (click)="menu.toggle($event)">
-          <span class="font-w-700 p-text-secondary">AB</span>
+          <span class="font-w-700 p-text-secondary">{{user}}</span>
         </p-avatar>
         <p-menu #menu [model]="items" [popup]="true" />
       </div>
@@ -26,11 +28,10 @@
     <div class="navigation">
       <h4 class="p-text-secondary m-left-10 m-bottom-5">Navegación</h4>
       <p-divider styleClass="my-10"/>
-      <p-tree [value]="files"/>
+      <p-tree [value]="treeData" selectionMode="single" (onNodeSelect)="nodeSelect($event, nodoElement)" #nodoElement />
     </div>
-    <div class="content d-flex flex-column">
-      <h3>Nueva documentación</h3>
-
+    <div class="content">
+      <router-outlet></router-outlet>
     </div>
   </div>
 

@@ -4,6 +4,7 @@
     left: 0;
     right: 0;
     top: 0;
+    z-index: 1;
   }
 
   .logo {
@@ -22,24 +23,31 @@
   }
 
   .main-wrapper {
-    position: fixed;
-    top: 55px;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    display: grid;
-    grid-template-columns: minmax(200px, 400px) 1fr;
-
+    display: flex;
+    justify-content: flex-end;
     .content {
-      padding: 20px;
+      margin-top: 55px;
+      padding: 20px 40px;
+      overflow: auto;
+      width: calc(100% - 300px);
+
+
+      quill-editor {
+        width: 100%;
+      }
     }
   }
 
   .navigation {
-    background: #f9fafb;
     box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.04);
     padding: 10px;
     overflow: auto;
+    position: fixed;
+    top: 55px;
+    left: 0;
+    bottom: 0;
+    width: 300px;
+
 
     ::ng-deep p-tree {
       .p-tree {

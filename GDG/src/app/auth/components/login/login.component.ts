@@ -31,7 +31,15 @@ export class LoginComponent {
       this.errorMessage = false;
       this.userService.login(this.form.value).subscribe(response => {
         this.errorMessage = false;
-        this.router.navigate(['/admin'])
+        localStorage.setItem('idUsuario',response.idUsuario ? response.idUsuario.toString() : '0');
+        localStorage.setItem('usuario',response.nombres+' '+response.apellidos);
+        localStorage.setItem('rol',response.roles.nombre);
+        if(response.roles.nombre === 'ADMIN') {
+          this.router.navigate(['/admin'])
+        } else {
+          this.router.navigate(['/'])
+        }
+
       }, error => {
         this.errorMessage = true;
       })
