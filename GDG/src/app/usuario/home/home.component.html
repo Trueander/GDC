@@ -1,10 +1,13 @@
 <div class="home-user">
 
   <div class="card">
-    <p-progressBar mode="indeterminate" [style]="{ height: '6px' }" />
+    <div class="spinner" *ngIf="isLoading$ | async">
+      <p-progressBar mode="indeterminate" [style]="{ height: '6px' }" />
+    </div>
     <p-toolbar>
-      <div class="p-toolbar-group-start  d-flex gap-5">
+      <div class="p-toolbar-group-start d-flex gap-25">
         <img class="logo" src="assets/logo.png" alt="logo">
+        <p-button label="Crear contenido" size="small" (click)="goToForm()"></p-button>
       </div>
       <div class="p-toolbar-group-center">
 

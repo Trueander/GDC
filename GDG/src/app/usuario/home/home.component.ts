@@ -2,21 +2,21 @@ import {Component, OnInit} from '@angular/core';
 import {SplitButtonModule} from "primeng/splitbutton";
 import {ToolbarModule} from "primeng/toolbar";
 import {InputTextModule} from "primeng/inputtext";
-import {MenuItem, TreeNode} from "primeng/api";
+import {MenuItem} from "primeng/api";
 import {TreeModule} from "primeng/tree";
 import {AvatarModule} from "primeng/avatar";
 import {MenuModule} from "primeng/menu";
 import {BadgeModule} from "primeng/badge";
 import {DividerModule} from "primeng/divider";
 import {QuillConfigModule} from "./quill-config";
-import {FormControl, ReactiveFormsModule} from "@angular/forms";
-import {ActivatedRoute, NavigationEnd, Router} from "@angular/router";
-import {DomSanitizer, SafeHtml} from "@angular/platform-browser";
+import {ReactiveFormsModule} from "@angular/forms";
+import {ActivatedRoute, Router} from "@angular/router";
 import {AsyncPipe, NgClass, NgIf, NgStyle} from "@angular/common";
 import {Ripple} from "primeng/ripple";
-import {filter, map, mergeMap, Observable, tap} from "rxjs";
+import {tap} from "rxjs";
 import {ContenidoService} from "../documentacion/services/contenido.service";
 import {ProgressBarModule} from "primeng/progressbar";
+import {SpinnerService} from "../spinner.service";
 
 @Component({
   selector: 'app-home',
@@ -48,9 +48,11 @@ export class HomeComponent implements OnInit{
   treeData: any;
   resourceId!: number | undefined;
   previousNode: any;
+  isLoading$ = this.spinnerService.isLoading$;
   constructor(private contenidoService: ContenidoService,
               private router: Router,
-              private route: ActivatedRoute) {
+              private route: ActivatedRoute,
+              private spinnerService: SpinnerService) {
   }
 
   ngOnInit() {
@@ -105,6 +107,10 @@ export class HomeComponent implements OnInit{
     if(this.resourceId) {
       this.nodos(treeData);
     }
+  }
+
+  goToForm(): void {
+    this.router.navigate(['contenido/form']);
   }
 
   nodos(treeData: any) {

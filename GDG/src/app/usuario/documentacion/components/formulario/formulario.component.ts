@@ -39,6 +39,7 @@ export class FormularioComponent implements OnInit{
   resourceId!: number;
   parentId!: number;
   content: any;
+  editable: boolean = false;
 
   constructor(private contenidoService: ContenidoService,
               private activatedRoute: ActivatedRoute,
@@ -47,14 +48,25 @@ export class FormularioComponent implements OnInit{
   }
 
   ngOnInit(): void {
-    // this.loadForm();
     this.loadContentIfExist();
   }
 
   saveContent(): void {
     if(this.form.valid) {
       this.contenidoService.saveContent(this.form.value).subscribe();
+      this.router.navigate(['contenido', this.resourceId])
     }
+  }
+
+  goToEditContent(): void {
+    const currentParams = this.activatedRoute.snapshot.queryParams;
+    const newParams = { ...currentParams, edit: true };
+    this.editable = true;
+    this.router.navigate([], {
+      relativeTo: this.activatedRoute,
+      queryParams: newParams,
+      queryParamsHandling: 'merge'
+    })
   }
 
   goToFormWithParentId(): void {
@@ -65,15 +77,22 @@ export class FormularioComponent implements OnInit{
     this.activatedRoute.paramMap
       .pipe(
         map(this.mapResourceId),
-        filter(resourceId => resourceId!==0),
-        switchMap(resourceId => this.contenidoService.get(resourceId)),
+        filter(resourceId => !!resourceId),
+        switchMap(resourceId => {
+          console.log(resourceId)
+          return this.contenidoService.get(resourceId)
+        }),
         tap(this.preloadData)
       ).subscribe();
 
     this.activatedRoute.queryParams.subscribe(queryParams => {
       this.parentId = +queryParams['padreId'];
-      console.log(this.parentId)
+      this.editable = queryParams['edit'];
       this.loadForm();
+      if(this.editable) {
+        this.form.get('titulo')?.setValue(this.content.titulo)
+        this.form.get('htmlContent')?.setValue(this.content.htmlContent)
+      }
     });
   }
 

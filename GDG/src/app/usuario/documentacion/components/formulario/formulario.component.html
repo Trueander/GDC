@@ -1,9 +1,9 @@
 <div class="contenedor">
-  <ng-container *ngIf="safeHtml && !parentId; else formulario">
+  <ng-container *ngIf="safeHtml && !editable && !parentId; else formulario">
     <div class="d-flex justify-content-space-btw align-items-end">
       <h1 class="m-bottom-0">{{content.titulo}}</h1>
       <div class="d-flex gap-10">
-        <p-button label="Editar" [outlined]="true" severity="info"/>
+        <p-button label="Editar" [outlined]="true" severity="info" (click)="goToEditContent()"/>
         <p-button label="Crear" [outlined]="true" (click)="goToFormWithParentId()"/>
       </div>
     </div>
